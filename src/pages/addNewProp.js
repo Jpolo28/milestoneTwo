@@ -1,10 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Typography, Box, Button, Container, FormControl, Select, InputLabel, MenuItem, TextField } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import axios from "axios";
-
+import { set } from "mongoose";
 const [formErrors, setFormErrors] = useState = ([]);
+const [isSubmit, setIsSubmit] = useState(false);
 
 const AddNewProp = () => {
   const [newProp, setNewProp] = useState({
@@ -28,33 +29,40 @@ const AddNewProp = () => {
   const developmentURL = "http://localhost:5000/api/citrus";
   
   const navigate = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    validate(formValues);
+    setFormErrors(validate());
+    setIsSubmit(true);
     axios
       .post(developmentURL, newProp)
       .then(() => navigate("/showProp"))
       .catch((err) => console.log(err));
   };
+  useEffect = ( ()=> {
+    if(Object.keys(formErrors).length === 0 && isSubmit) {
+      console.log(newProp.value)
+    }
+  })
   
   const validate = () => {
     const errors = {};
-    if(!values.city){
+    if(newProp.city){
       errors.city = "City is Required"
     }
-    if(!values.state){
+    if(newProp.state){
       errors.state = "State is Required"
     }
-    if(!values.street){
+    if(newProp.street){
       errors.street = "Street is Required"
     }
-    if(!values.size){
+    if(newProp.size){
       errors.size = "Size is Required"
     }
-    if(!values.rent){
+    if(newProp.rent){
       errors.rent = "Rent is Required"
     }
-    if(!values.occupied){
+    if(newProp.occupied){
       errors.occupied = "Occupied is Required"
     }
   }
