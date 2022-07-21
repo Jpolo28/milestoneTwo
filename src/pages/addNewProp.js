@@ -3,70 +3,61 @@ import { useNavigate } from "react-router-dom";
 import { Typography, Box, Button, Container, FormControl, Select, InputLabel, MenuItem, TextField } from "@mui/material";
 import KeyboardArrowRightIcon from "@mui/icons-material/KeyboardArrowRight";
 import axios from "axios";
-<html><div id= "error"></div></html>
-const errorElement = document.getElementById('error')
+
+const [formErrors, setFormErrors] = useState = ([]);
+
 const AddNewProp = () => {
   const [newProp, setNewProp] = useState({
     state: "",
     city: "",
     street: "",
-    apartmentNum: "",
-    size: "",
-    rent: "",
-    occupied: "",
+    apartmentNum: Number,
+    size: Number + "sq ft",
+    rent: Number,
+    occupied: Boolean,
     tenantName: "",
     occupiedDate: Date,
-    numOccupants: "",
-    pets: "",
-    latePayment: "",
+    numOccupants: Number,
+    pets: Boolean,
+    latePayment: Boolean,
     tenantRequests: "",
     tenantNotes: "",
   });
 
-<<<<<<< HEAD
-  AddNewProp.addEventListener('submit', (e) => {
-    let messages = []
-    if (state.value === '' || state.value == null) {
-      messages.push('State is Required')
-    }
-    if (city.value === '' || city.value == null) {
-      messages.push('City is Required')
-    }
-    if (street.value === '' || street.value == null) {
-      messages.push('Street is Required')
-    }
-    if (size.value === '' || size.value == null) {
-      messages.push('Size is Required')
-    }
-    if (rent.value === '' || rent.value == null) {
-      messages.push('Rent is Required')
-    }
-    if (occupied.value === '' || occupied.value == null) {
-      messages.push('Size is Required')
-    }
-    
-
-    if (message.length > 0) {
-      e.preventDefault()
-      errorElement.innerText = messages.join(', ')
-    }
-  })
-
-
-=======
->>>>>>> d4ce3c2d4606bb0014fa0acd8e233c61e97c0d6e
   const deploymentURL = "https://citrusproperty.herokuapp.com/api/citrus";
   const developmentURL = "http://localhost:5000/api/citrus";
   
   const navigate = useNavigate();
-
   const handleSubmit = (e) => {
     e.preventDefault();
+    validate(formValues);
     axios
       .post(developmentURL, newProp)
       .then(() => navigate("/showProp"))
       .catch((err) => console.log(err));
   };
+  
+  const validate = () => {
+    const errors = {};
+    if(!values.city){
+      errors.city = "City is Required"
+    }
+    if(!values.state){
+      errors.state = "State is Required"
+    }
+    if(!values.street){
+      errors.street = "Street is Required"
+    }
+    if(!values.size){
+      errors.size = "Size is Required"
+    }
+    if(!values.rent){
+      errors.rent = "Rent is Required"
+    }
+    if(!values.occupied){
+      errors.occupied = "Occupied is Required"
+    }
+  }
 
   return (
     <Box textAlign="center" justifyContent="center" alignItems="center">
@@ -146,6 +137,7 @@ const AddNewProp = () => {
               setNewProp({ ...newProp, city: e.target.value });
             }}
             label="City"
+            errorText={...}
             variant="outlined"
             color="primary"
             margin="dense"
@@ -309,6 +301,7 @@ const AddNewProp = () => {
           >
             Submit New Property
           </Button>
+          <div id='error'></div>
         </Box>
       </Container>
     </Box>
